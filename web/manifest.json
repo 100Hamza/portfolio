@@ -1,11 +1,11 @@
 {
-    "name": "hamza_portfolio",
-    "short_name": "hamza_portfolio",
+    "name": "Muhammad Hamza | Portfolio",
+    "short_name": "Hamza Portfolio",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Professional Flutter Developer specializing in premium, production-ready apps.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
