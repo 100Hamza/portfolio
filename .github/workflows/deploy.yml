@@ -1,55 +1,3 @@
-# name: Deploy Flutter Web to GitHub Pages
-
-# on:
-#   push:
-#     branches:
-#       - main
-
-# permissions:
-#   contents: write
-
-# jobs:
-#   build-and-deploy:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout Repository
-#         uses: actions/checkout@v3
-
-#       - name: Setup Java
-#         uses: actions/setup-java@v3
-#         with:
-#           distribution: 'zulu'
-#           java-version: '17'
-
-#       - name: Setup Flutter
-#         uses: subosito/flutter-action@v2
-#         with:
-#           channel: 'stable'
-
-#       - name: Install Dependencies
-#         run: flutter pub get
-
-#       - name: Build Flutter Web
-#         run: flutter build web --base-href "/${{ github.event.repository.name }}/"
-
-#       # Yeh step check karega agar build/web/assets/assets ban raha hai toh usay sahi karega
-#       - name: Fix Duplicate Assets Folder Nesting
-#         run: |
-#           if [ -d "build/web/assets/assets" ]; then
-#             echo "Duplicate nesting detected! Moving assets..."
-#             cp -r build/web/assets/assets/* build/web/assets/
-#             rm -rf build/web/assets/assets
-#           fi
-#           touch build/web/.nojekyll
-
-#       - name: Deploy to GitHub Pages
-#         uses: JamesIves/github-pages-deploy-action@v4
-#         with:
-#           token: ${{ secrets.GITHUB_TOKEN }}
-#           branch: gh-pages
-#           folder: build/web
-
 name: Deploy Flutter Web to GitHub Pages
 
 on:
@@ -82,16 +30,18 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      # Hamein deploy karne se pehle ensure karna hai ke koi purana cache na ho
-      - name: Clean Previous Builds
-        run: flutter clean
-
       - name: Build Flutter Web
-        run: flutter build web --release --base-href "/${{ github.event.repository.name }}/"
+        run: flutter build web --base-href "/${{ github.event.repository.name }}/"
 
-      # Bina kisi risky deletion k simply .nojekyll generate karein
-      - name: Add .nojekyll
-        run: touch build/web/.nojekyll
+      # Yeh step check karega agar build/web/assets/assets ban raha hai toh usay sahi karega
+      - name: Fix Duplicate Assets Folder Nesting
+        run: |
+          if [ -d "build/web/assets/assets" ]; then
+            echo "Duplicate nesting detected! Moving assets..."
+            cp -r build/web/assets/assets/* build/web/assets/
+            rm -rf build/web/assets/assets
+          fi
+          touch build/web/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
@@ -99,4 +49,3 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: build/web
-          clean: true # Yeh automatically deploy ke waqt gh-pages branch ko sahi se sync karega
