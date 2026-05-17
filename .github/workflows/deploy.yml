@@ -1,9 +1,52 @@
+# name: Deploy Flutter Web to GitHub Pages
+
+# on:
+#   push:
+#     branches:
+#       - main # Agar aapki branch ka naam master hai toh yahan master likhein
+
+# jobs:
+#   build-and-deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v3
+
+#       - name: Setup Java
+#         uses: actions/setup-java@v3
+#         with:
+#           distribution: 'zulu'
+#           java-version: '17'
+
+#       - name: Setup Flutter
+#         uses: subosito/flutter-action@v2
+#         with:
+#           channel: 'stable'
+
+#       - name: Install Dependencies
+#         run: flutter pub get
+
+#       - name: Build Flutter Web
+#         run: flutter build web --base-href "/${{ github.event.repository.name }}/"
+
+#       - name: Deploy to GitHub Pages
+#         uses: JamesIves/github-pages-deploy-action@v4
+#         with:
+#           token: ${{ secrets.GH_TOKEN }}
+#           branch: gh-pages # Yeh branch khud ban jayegi
+#           folder: build/web
+
 name: Deploy Flutter Web to GitHub Pages
 
 on:
   push:
     branches:
-      - main # Agar aapki branch ka naam master hai toh yahan master likhein
+      - main
+
+# Yeh permissions lazmi hain taake Actions aapki gh-pages branch par build push kar sakay
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
@@ -33,6 +76,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          token: ${{ secrets.GH_TOKEN }}
-          branch: gh-pages # Yeh branch khud ban jayegi
+          token: ${{ secrets.GITHUB_TOKEN }} # Yahan GITHUB_TOKEN kar diya hai
+          branch: gh-pages
           folder: build/web

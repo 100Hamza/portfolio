@@ -6,7 +6,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import '../../core/theme/app_colors.dart';
 
 class HeroSection extends StatelessWidget {
-  const HeroSection({Key? key}) : super(key: key);
+  const HeroSection({super.key});
 
   Future<void> _launchUrl(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
