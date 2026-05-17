@@ -1,5 +1,3 @@
-
-
 # name: Deploy Flutter Web to GitHub Pages
 
 # on:
@@ -7,7 +5,6 @@
 #     branches:
 #       - main
 
-# # Yeh permissions lazmi hain taake Actions aapki gh-pages branch par build push kar sakay
 # permissions:
 #   contents: write
 
@@ -36,10 +33,20 @@
 #       - name: Build Flutter Web
 #         run: flutter build web --base-href "/${{ github.event.repository.name }}/"
 
+#       # Yeh step check karega agar build/web/assets/assets ban raha hai toh usay sahi karega
+#       - name: Fix Duplicate Assets Folder Nesting
+#         run: |
+#           if [ -d "build/web/assets/assets" ]; then
+#             echo "Duplicate nesting detected! Moving assets..."
+#             cp -r build/web/assets/assets/* build/web/assets/
+#             rm -rf build/web/assets/assets
+#           fi
+#           touch build/web/.nojekyll
+
 #       - name: Deploy to GitHub Pages
 #         uses: JamesIves/github-pages-deploy-action@v4
 #         with:
-#           token: ${{ secrets.GITHUB_TOKEN }} # Yahan GITHUB_TOKEN kar diya hai
+#           token: ${{ secrets.GITHUB_TOKEN }}
 #           branch: gh-pages
 #           folder: build/web
 
@@ -75,18 +82,16 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      - name: Build Flutter Web
-        run: flutter build web --base-href "/${{ github.event.repository.name }}/"
+      # Hamein deploy karne se pehle ensure karna hai ke koi purana cache na ho
+      - name: Clean Previous Builds
+        run: flutter clean
 
-      # Yeh step check karega agar build/web/assets/assets ban raha hai toh usay sahi karega
-      - name: Fix Duplicate Assets Folder Nesting
-        run: |
-          if [ -d "build/web/assets/assets" ]; then
-            echo "Duplicate nesting detected! Moving assets..."
-            cp -r build/web/assets/assets/* build/web/assets/
-            rm -rf build/web/assets/assets
-          fi
-          touch build/web/.nojekyll
+      - name: Build Flutter Web
+        run: flutter build web --release --base-href "/${{ github.event.repository.name }}/"
+
+      # Bina kisi risky deletion k simply .nojekyll generate karein
+      - name: Add .nojekyll
+        run: touch build/web/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
@@ -94,3 +99,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: build/web
+          clean: true # Yeh automatically deploy ke waqt gh-pages branch ko sahi se sync karega
