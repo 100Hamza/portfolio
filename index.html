@@ -1,48 +1,758 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="/portfolio/">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description"
-    content="Professional Flutter Developer specializing in premium, production-ready Android/iOS applications and scalable full-stack integration.">
+    content="Elite Flutter Developer | Crafting next-gen, high-performance applications for Android, iOS, web, and beyond.">
 
-  <meta property="og:title" content="Muhammad Hamza | Portfolio">
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="Muhammad Hamza | The Flutter Virtuoso">
   <meta property="og:description"
-    content="Professional Flutter Developer specializing in premium, production-ready Android/iOS applications and scalable full-stack integration.">
+    content="Professional Flutter Developer specializing in premium, production-ready experiences.">
   <meta property="og:image" content="icons/Icon-512.png">
   <meta property="og:type" content="website">
 
-  <!-- iOS meta tags & icons -->
+  <!-- Web App -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Muhammad Hamza | Portfolio">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Hamza Dev">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png" />
-
-  <title>Muhammad Hamza | Portfolio</title>
   <link rel="manifest" href="manifest.json">
+
+  <title>Muhammad Hamza | Flutter Virtuoso</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,500;14..32,700;14..32,800&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    body {
+      background: #000000;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', 'Space Mono', monospace;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* canvas layers */
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 0;
+      filter: brightness(1.05) contrast(1.2);
+    }
+
+    #codeRainCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.28;
+    }
+
+    /* main splash container with 3D perspective */
+    .splash-universe {
+      position: relative;
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transform-style: preserve-3d;
+      perspective: 800px;
+      animation: floatIn 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    /* 3D tilt card effect */
+    .tilt-card {
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out;
+      will-change: transform;
+    }
+
+    /* kinetic rings with neon pulse */
+    .quantum-rings {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      border-style: solid;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .ring-core {
+      width: 160px;
+      height: 160px;
+      border-width: 1px;
+      border-color: #00e0ff;
+      filter: drop-shadow(0 0 12px cyan);
+      animation: pulseRing 2s infinite alternate;
+    }
+
+    .ring-outer {
+      width: 340px;
+      height: 340px;
+      border-width: 1.5px;
+      border-color: rgba(0, 180, 255, 0.6);
+      border-top-color: #00ffff;
+      animation: spinSlow 12s infinite linear;
+    }
+
+    .ring-super {
+      width: 520px;
+      height: 520px;
+      border-width: 0.8px;
+      border-style: dashed;
+      border-color: #3b82f6;
+      animation: spinReverse 18s infinite linear;
+    }
+
+    .energy-core {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 18px;
+      height: 18px;
+      background: radial-gradient(circle, #ffffff, #00ccff);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 40px 8px #00a6ff;
+      animation: coreBeat 1.4s infinite alternate;
+      z-index: 5;
+    }
+
+    /* LOGO: Neon 3D extrusion */
+    .logo-god {
+      font-size: 6rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #FFFFFF, #7dd3fc, #1e88e5, #0f172a);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: gradientFlow 5s ease infinite, levitateAdvanced 2.8s ease-in-out infinite;
+      text-shadow: 0 0 20px rgba(0, 150, 255, 0.5);
+      position: relative;
+      transition: all 0.2s;
+    }
+
+    .glow-sub {
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 8px;
+      background: linear-gradient(90deg, #9cd0ff, #c084fc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-top: -12px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeSlideUp 0.9s 0.6s forwards;
+      text-transform: uppercase;
+    }
+
+    /* plasma loading bar */
+    .plasma-loader {
+      background: rgba(0, 10, 30, 0.65);
+      backdrop-filter: blur(16px);
+      border-radius: 100px;
+      padding: 0.65rem 2rem;
+      width: 460px;
+      max-width: 88vw;
+      border: 1px solid rgba(0, 210, 255, 0.5);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .load-stats {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #b8e2ff;
+      margin-bottom: 10px;
+    }
+
+    .load-phase {
+      background: rgba(0, 255, 255, 0.2);
+      padding: 0 10px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+    }
+
+    .load-percent {
+      font-weight: 800;
+      color: #64ffda;
+      text-shadow: 0 0 5px #00ccff;
+    }
+
+    .plasma-track {
+      width: 100%;
+      height: 8px;
+      background: #071a2b;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .plasma-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #00c6ff, #7c4dff, #ff2e9e);
+      background-size: 200% 100%;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00a6ff;
+      transition: width 0.12s cubic-bezier(0.34, 1.2, 0.64, 1);
+      position: relative;
+      animation: plasmaWave 1.2s infinite linear;
+    }
+
+    .tech-badge {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-family: monospace;
+      color: #7e8a9e;
+    }
+
+    .badge-item {
+      background: rgba(0, 255, 255, 0.08);
+      padding: 4px 12px;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+      letter-spacing: 1px;
+    }
+
+    /* keyframes */
+    @keyframes gradientFlow {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes levitateAdvanced {
+      0% {
+        transform: translateY(0px) scale(1);
+        text-shadow: 0 0 10px #00a6ff;
+      }
+
+      100% {
+        transform: translateY(-8px) scale(1.01);
+        text-shadow: 0 0 25px #0088ff;
+      }
+    }
+
+    @keyframes fadeSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(18px);
+        letter-spacing: 12px;
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+        letter-spacing: 8px;
+      }
+    }
+
+    @keyframes spinSlow {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    @keyframes spinReverse {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      to {
+        transform: translate(-50%, -50%) rotate(-360deg);
+      }
+    }
+
+    @keyframes pulseRing {
+      0% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(0.9);
+        box-shadow: 0 0 5px cyan;
+      }
+
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2);
+        box-shadow: 0 0 35px cyan;
+      }
+    }
+
+    @keyframes coreBeat {
+      0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.7;
+        box-shadow: 0 0 15px #00ccff;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 1;
+        box-shadow: 0 0 45px #00e0ff;
+      }
+    }
+
+    @keyframes plasmaWave {
+      0% {
+        background-position: 0% 0%;
+      }
+
+      100% {
+        background-position: 200% 0%;
+      }
+    }
+
+    @keyframes floatIn {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+        filter: blur(10px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes particleBurst {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    .splash-hidden {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1), visibility 0s 1.2s;
+      filter: blur(20px);
+      pointer-events: none;
+    }
+
+    @media (max-width: 600px) {
+      .logo-god {
+        font-size: 3rem;
+        letter-spacing: 0.1em;
+      }
+
+      .glow-sub {
+        font-size: 0.7rem;
+        letter-spacing: 5px;
+      }
+
+      .plasma-loader {
+        width: 320px;
+        padding: 0.5rem 1.2rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
+
+  <!-- canvas: particle vortex + mouse attractor -->
+  <canvas id="bgCanvas"></canvas>
+  <!-- canvas: digital rain (dart keywords) -->
+  <canvas id="codeRainCanvas"></canvas>
+
+  <div id="splashMaster" class="splash-universe">
+    <div class="quantum-rings">
+      <div class="ring ring-core"></div>
+      <div class="ring ring-outer"></div>
+      <div class="ring ring-super"></div>
+      <div class="energy-core"></div>
+    </div>
+
+    <div class="tilt-card" id="tiltElement">
+      <div class="logo-god">HAMZA</div>
+      <div class="glow-sub">FLUTTER ALCHEMIST</div>
+    </div>
+
+    <div class="plasma-loader">
+      <div class="load-stats">
+        <span class="load-phase" id="phaseText">✦ QUANTUM BOOT ✦</span>
+        <span class="load-percent" id="percentDisplay">0%</span>
+      </div>
+      <div class="plasma-track">
+        <div class="plasma-fill" id="plasmaFill"></div>
+      </div>
+    </div>
+    <div class="tech-badge">
+      <span class="badge-item">DART 3.6</span>
+      <span class="badge-item">FLUTTER 3.29</span>
+      <span class="badge-item">WEB ASSEMBLY</span>
+    </div>
+  </div>
+
   <script src="flutter_bootstrap.js" async></script>
+
+  <script>
+    (function () {
+      // --------------------------------------------------------------
+      // 1. NEXT-GEN PARTICLE VORTEX (interactive magnetic field)
+      // --------------------------------------------------------------
+      const bgCanvas = document.getElementById('bgCanvas');
+      const ctx = bgCanvas.getContext('2d');
+      let w, h, particles = [];
+      let mouse = { x: null, y: null, influence: 0 };
+      let time = 0;
+
+      function resizeBg() {
+        w = window.innerWidth;
+        h = window.innerHeight;
+        bgCanvas.width = w;
+        bgCanvas.height = h;
+      }
+
+      class VortexParticle {
+        constructor() {
+          this.x = Math.random() * w;
+          this.y = Math.random() * h;
+          this.vx = (Math.random() - 0.5) * 0.6;
+          this.vy = (Math.random() - 0.5) * 0.4;
+          this.size = Math.random() * 2.5 + 1;
+          this.baseHue = 190 + Math.random() * 40;
+          this.life = 0.5 + Math.random() * 0.5;
+        }
+        update() {
+          // vortex field: create rotation around center + mouse attraction
+          let cx = w / 2, cy = h / 2;
+          let dx = this.x - cx;
+          let dy = this.y - cy;
+          let dist = Math.hypot(dx, dy);
+          let angle = Math.atan2(dy, dx);
+          let force = 0.008 * (200 / (dist + 80));
+          this.vx -= Math.sin(angle) * force;
+          this.vy += Math.cos(angle) * force;
+
+          if (mouse.x && mouse.y) {
+            let mdx = this.x - mouse.x;
+            let mdy = this.y - mouse.y;
+            let mdist = Math.hypot(mdx, mdy);
+            if (mdist < 150) {
+              let push = (150 - mdist) * 0.002;
+              let ang = Math.atan2(mdy, mdx);
+              this.vx += Math.cos(ang) * push;
+              this.vy += Math.sin(ang) * push;
+            }
+          }
+
+          this.vx *= 0.99;
+          this.vy *= 0.99;
+          this.x += this.vx;
+          this.y += this.vy;
+          if (this.x < -50) this.x = w + 50;
+          if (this.x > w + 50) this.x = -50;
+          if (this.y < -50) this.y = h + 50;
+          if (this.y > h + 50) this.y = -50;
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          let hue = (this.baseHue + time * 0.3) % 360;
+          ctx.fillStyle = `hsla(${hue}, 80%, 65%, ${this.life * 0.5})`;
+          ctx.fill();
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = `hsl(${hue}, 100%, 70%)`;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      }
+
+      function initParticles() {
+        let count = Math.min(180, Math.floor(w / 8));
+        particles = [];
+        for (let i = 0; i < count; i++) particles.push(new VortexParticle());
+      }
+
+      function animateVortex() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+        ctx.fillRect(0, 0, w, h);
+        for (let p of particles) {
+          p.update();
+          p.draw();
+        }
+        // additional glowing connections for high-tech feel
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(0, 200, 255, 0.12)';
+        ctx.lineWidth = 0.6;
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            let dx = particles[i].x - particles[j].x;
+            let dy = particles[i].y - particles[j].y;
+            if (Math.hypot(dx, dy) < 95) {
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+        time += 1;
+        requestAnimationFrame(animateVortex);
+      }
+
+      // --------------------------------------------------------------
+      // 2. DIGITAL RAIN (Dart / Flutter keywords)
+      // --------------------------------------------------------------
+      const rainCanvas = document.getElementById('codeRainCanvas');
+      const rainCtx = rainCanvas.getContext('2d');
+      let rainCols, rainDrops = [], rainFontSize = 14;
+      const keywords = ['await', 'async', 'Widget', 'Stateful', 'Stateless', 'Future', 'Stream', 'build', 'setState', 'Scaffold', 'MaterialApp', 'BLoC', 'GetX', 'Riverpod', 'flutter', 'dart', 'hot reload', 'imperative', 'declarative'];
+
+      function resizeRain() {
+        rainCanvas.width = window.innerWidth;
+        rainCanvas.height = window.innerHeight;
+        rainCols = Math.floor(rainCanvas.width / rainFontSize);
+        rainDrops = Array(rainCols).fill(1);
+      }
+
+      function drawRain() {
+        rainCtx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        rainCtx.fillRect(0, 0, rainCanvas.width, rainCanvas.height);
+        rainCtx.font = `${rainFontSize}px 'Space Mono', monospace`;
+        rainCtx.fillStyle = '#0af';
+        for (let i = 0; i < rainDrops.length; i++) {
+          let text = keywords[Math.floor(Math.random() * keywords.length)];
+          let x = i * rainFontSize;
+          let y = rainDrops[i] * rainFontSize;
+          rainCtx.fillStyle = `rgba(0, 180, 255, ${0.2 + Math.sin(Date.now() * 0.002 + i) * 0.1})`;
+          rainCtx.fillText(text, x, y);
+          if (y > rainCanvas.height && Math.random() > 0.975) rainDrops[i] = 0;
+          rainDrops[i]++;
+        }
+        requestAnimationFrame(drawRain);
+      }
+
+      // --------------------------------------------------------------
+      // 3. INTERACTIVE 3D TILT (mouse parallax for logo)
+      // --------------------------------------------------------------
+      const tiltCard = document.getElementById('tiltElement');
+      document.addEventListener('mousemove', (e) => {
+        if (!tiltCard) return;
+        let x = (e.clientX / window.innerWidth) * 2 - 1;
+        let y = (e.clientY / window.innerHeight) * 2 - 1;
+        let rotX = y * 6;
+        let rotY = x * 8;
+        tiltCard.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(6px)`;
+      });
+      // reset on leave
+      document.addEventListener('mouseleave', () => {
+        if (tiltCard) tiltCard.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
+      });
+
+      // --------------------------------------------------------------
+      // 4. SOPHISTICATED LOADING SIMULATION + BURST EFFECT
+      // --------------------------------------------------------------
+      let currentPercent = 0;
+      const plasmaFill = document.getElementById('plasmaFill');
+      const percentSpan = document.getElementById('percentDisplay');
+      const phaseSpan = document.getElementById('phaseText');
+
+      const epicStages = [
+        { text: "⚡ INITIALIZING DART VM", cap: 12 },
+        { text: "🌀 COMPILING WIDGET TREE", cap: 27 },
+        { text: "💠 HYDRATING STATE", cap: 44 },
+        { text: "🔮 OPTIMIZING RENDERING", cap: 61 },
+        { text: "✨ LOADING CUSTOM PAINT", cap: 79 },
+        { text: "🚀 DEPLOYING ISOLATES", cap: 94 },
+        { text: "🏆 READY FOR PREMIUM UX", cap: 100 }
+      ];
+
+      let interval = null;
+      function updateProgressUI() {
+        plasmaFill.style.width = currentPercent + '%';
+        percentSpan.innerText = Math.floor(currentPercent) + '%';
+        for (let i = epicStages.length - 1; i >= 0; i--) {
+          if (currentPercent >= epicStages[i].cap) {
+            if (phaseSpan.innerText !== epicStages[i].text) {
+              phaseSpan.innerText = epicStages[i].text;
+              // micro glow pulse
+              phaseSpan.style.opacity = '0.5';
+              setTimeout(() => { if (phaseSpan) phaseSpan.style.opacity = '1'; }, 120);
+            }
+            break;
+          }
+        }
+        // when complete, trigger brilliant burst & vanish
+        if (currentPercent >= 100) {
+          if (interval) clearInterval(interval);
+          interval = null;
+          finishSplashWithBurst();
+        }
+      }
+
+      function finishSplashWithBurst() {
+        const splash = document.getElementById('splashMaster');
+        if (!splash) return;
+        // spectacular canvas burst effect
+        let burstCanvas = document.createElement('canvas');
+        burstCanvas.style.position = 'fixed';
+        burstCanvas.style.top = '0';
+        burstCanvas.style.left = '0';
+        burstCanvas.style.width = '100%';
+        burstCanvas.style.height = '100%';
+        burstCanvas.style.pointerEvents = 'none';
+        burstCanvas.style.zIndex = '1000';
+        document.body.appendChild(burstCanvas);
+        let bCtx = burstCanvas.getContext('2d');
+        burstCanvas.width = window.innerWidth;
+        burstCanvas.height = window.innerHeight;
+        let centerX = burstCanvas.width / 2, centerY = burstCanvas.height / 2;
+        let radius = 10;
+        let burstAnim = setInterval(() => {
+          bCtx.clearRect(0, 0, burstCanvas.width, burstCanvas.height);
+          bCtx.beginPath();
+          bCtx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+          bCtx.fillStyle = `rgba(0, 200, 255, ${1 - radius / 300})`;
+          bCtx.fill();
+          radius += 18;
+          if (radius > 500) {
+            clearInterval(burstAnim);
+            burstCanvas.remove();
+          }
+        }, 20);
+
+        splash.classList.add('splash-hidden');
+        setTimeout(() => {
+          if (splash.parentNode) splash.remove();
+        }, 1300);
+      }
+
+      function startLoading() {
+        if (interval) return;
+        interval = setInterval(() => {
+          if (currentPercent < 100) {
+            let inc = 0;
+            if (currentPercent < 30) inc = Math.random() * 1.8 + 0.8;
+            else if (currentPercent < 70) inc = Math.random() * 1.2 + 0.6;
+            else inc = Math.random() * 0.6 + 0.3;
+            currentPercent = Math.min(currentPercent + inc, 100);
+            updateProgressUI();
+          } else {
+            if (interval) clearInterval(interval);
+          }
+        }, 38);
+      }
+
+      // --------------------------------------------------------------
+      // 5. FLUTTER INTEGRATION + FAST READY ACCELERATION
+      // --------------------------------------------------------------
+      window.addEventListener('load', () => {
+        startLoading();
+        // optional event from flutter if available
+        document.addEventListener('flutter-first-frame', () => {
+          if (currentPercent < 92) {
+            let fast = setInterval(() => {
+              if (currentPercent < 98) {
+                currentPercent = Math.min(currentPercent + 4.2, 98);
+                updateProgressUI();
+              } else {
+                clearInterval(fast);
+                if (currentPercent < 100) { currentPercent = 100; updateProgressUI(); }
+              }
+            }, 35);
+          }
+        });
+        // safety: force complete after max 9.5s
+        setTimeout(() => {
+          if (currentPercent < 100) {
+            currentPercent = 100;
+            updateProgressUI();
+          }
+        }, 9500);
+      });
+
+      // sync resize events
+      window.addEventListener('resize', () => {
+        resizeBg();
+        initParticles();
+        resizeRain();
+      });
+
+      resizeBg();
+      initParticles();
+      animateVortex();
+      resizeRain();
+      drawRain();
+
+      // mouse tracking for vortex
+      window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        setTimeout(() => { mouse.x = null; mouse.y = null; }, 150);
+      });
+    })();
+  </script>
 </body>
 
 </html>
