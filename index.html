@@ -10,14 +10,12 @@
   <meta name="description"
     content="Elite Flutter Developer | Crafting next-gen, high-performance applications for Android, iOS, web, and beyond.">
 
-  <!-- Open Graph / Social -->
   <meta property="og:title" content="Muhammad Hamza | The Flutter Virtuoso">
   <meta property="og:description"
     content="Professional Flutter Developer specializing in premium, production-ready experiences.">
   <meta property="og:image" content="icons/Icon-512.png">
   <meta property="og:type" content="website">
 
-  <!-- Web App -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Hamza Dev">
@@ -60,6 +58,7 @@
       display: block;
       z-index: 0;
       filter: brightness(1.05) contrast(1.2);
+      transition: opacity 0.8s ease;
     }
 
     #codeRainCanvas {
@@ -72,9 +71,10 @@
       z-index: 1;
       pointer-events: none;
       opacity: 0.28;
+      transition: opacity 0.8s ease;
     }
 
-    /* main splash container with 3D perspective */
+    /* main splash container - fixed overlay */
     .splash-universe {
       position: fixed;
       top: 0;
@@ -162,7 +162,6 @@
       z-index: 5;
     }
 
-    /* LOGO: Neon 3D extrusion */
     .logo-god {
       font-size: 6rem;
       font-weight: 900;
@@ -195,7 +194,6 @@
       text-transform: uppercase;
     }
 
-    /* plasma loading bar */
     .plasma-loader {
       background: rgba(0, 10, 30, 0.65);
       backdrop-filter: blur(16px);
@@ -269,7 +267,7 @@
       letter-spacing: 1px;
     }
 
-    /* keyframes */
+    /* animations */
     @keyframes gradientFlow {
       0% {
         background-position: 0% 50%;
@@ -382,13 +380,18 @@
       }
     }
 
-    /* splash hidden state */
+    /* removal class - fades out cleanly */
     .splash-hidden {
       opacity: 0 !important;
       visibility: hidden !important;
       transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), visibility 0s 0.8s;
       filter: blur(15px);
       pointer-events: none;
+    }
+
+    /* canvas fade class */
+    .canvas-fadeout {
+      opacity: 0 !important;
     }
 
     @media (max-width: 600px) {
@@ -412,11 +415,9 @@
 
 <body>
 
-  <!-- background canvases (cosmic vortex + code rain) -->
   <canvas id="bgCanvas"></canvas>
   <canvas id="codeRainCanvas"></canvas>
 
-  <!-- MAIN SPLASH SCREEN -->
   <div id="splashMaster" class="splash-universe">
     <div class="quantum-rings">
       <div class="ring ring-core"></div>
@@ -446,21 +447,22 @@
     </div>
   </div>
 
-  <!-- Flutter bootstrap (your existing file) -->
   <script src="flutter_bootstrap.js" async></script>
 
   <script>
     (function () {
       // ============================================================
-      // 1. COSMIC VORTEX + PARTICLE SYSTEM (same as before)
+      // 1. COSMIC VORTEX + PARTICLE SYSTEM
       // ============================================================
       const bgCanvas = document.getElementById('bgCanvas');
       const ctx = bgCanvas.getContext('2d');
       let w, h, particles = [];
       let mouse = { x: null, y: null };
       let time = 0;
+      let isAnimationActive = true; // Control flag to kill loop
 
       function resizeBg() {
+        if (!isAnimationActive) return;
         w = window.innerWidth;
         h = window.innerHeight;
         bgCanvas.width = w;
@@ -522,13 +524,14 @@
       }
 
       function initParticles() {
+        if (!isAnimationActive) return;
         let count = Math.min(180, Math.floor(w / 8));
         particles = [];
         for (let i = 0; i < count; i++) particles.push(new VortexParticle());
       }
 
       function animateVortex() {
-        if (!ctx) return;
+        if (!ctx || !isAnimationActive) return; // Halt if inactive
         ctx.clearRect(0, 0, w, h);
         ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
         ctx.fillRect(0, 0, w, h);
@@ -565,6 +568,7 @@
       const keywords = ['await', 'async', 'Widget', 'Stateful', 'Stateless', 'Future', 'Stream', 'build', 'setState', 'Scaffold', 'MaterialApp', 'BLoC', 'GetX', 'Riverpod', 'flutter', 'dart', 'hot reload'];
 
       function resizeRain() {
+        if (!isAnimationActive) return;
         rainCanvas.width = window.innerWidth;
         rainCanvas.height = window.innerHeight;
         rainCols = Math.floor(rainCanvas.width / rainFontSize);
@@ -572,6 +576,7 @@
       }
 
       function drawRain() {
+        if (!rainCtx || !isAnimationActive) return; // Halt if inactive
         rainCtx.fillStyle = 'rgba(0, 0, 0, 0.05)';
         rainCtx.fillRect(0, 0, rainCanvas.width, rainCanvas.height);
         rainCtx.font = `${rainFontSize}px 'Space Mono', monospace`;
@@ -592,20 +597,22 @@
       // 3. 3D TILT EFFECT
       // ============================================================
       const tiltCard = document.getElementById('tiltElement');
-      document.addEventListener('mousemove', (e) => {
+      function onMouseMove(e) {
         if (!tiltCard) return;
         let x = (e.clientX / window.innerWidth) * 2 - 1;
         let y = (e.clientY / window.innerHeight) * 2 - 1;
         let rotX = y * 6;
         let rotY = x * 8;
         tiltCard.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(6px)`;
-      });
-      document.addEventListener('mouseleave', () => {
+      }
+      function onMouseLeave() {
         if (tiltCard) tiltCard.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
-      });
+      }
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseleave', onMouseLeave);
 
       // ============================================================
-      // 4. LOADING SIMULATION
+      // 4. LOADING SIMULATION (visual only)
       // ============================================================
       let currentPercent = 0;
       const plasmaFill = document.getElementById('plasmaFill');
@@ -624,6 +631,7 @@
 
       let interval = null;
       function updateProgressUI() {
+        if (!plasmaFill) return;
         plasmaFill.style.width = currentPercent + '%';
         percentSpan.innerText = Math.floor(currentPercent) + '%';
         for (let i = epicStages.length - 1; i >= 0; i--) {
@@ -656,106 +664,100 @@
       }
 
       // ============================================================
-      // 5. CRITICAL: REMOVE SPLASH WHEN FLUTTER UI APPEARS
+      // 5. REMOVE SPLASH & BACKGROUND CANVASES COMPLETELY
       // ============================================================
-      function dismissSplashForever() {
+      let splashRemoved = false;
+
+      function removeSplashCompletely() {
+        if (splashRemoved) return;
+        splashRemoved = true;
+
+        // Kill loops and events to boost portfolio performance
+        isAnimationActive = false;
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseleave', onMouseLeave);
+
         const splash = document.getElementById('splashMaster');
-        if (!splash) return;
-        if (splash.classList.contains('splash-hidden')) return;
+        const canvas1 = document.getElementById('bgCanvas');
+        const canvas2 = document.getElementById('codeRainCanvas');
 
-        // add hidden class to fade out
-        splash.classList.add('splash-hidden');
-        // optional: add burst effect for extra flair
-        let burstCanvas = document.createElement('canvas');
-        burstCanvas.style.position = 'fixed';
-        burstCanvas.style.top = '0';
-        burstCanvas.style.left = '0';
-        burstCanvas.style.width = '100%';
-        burstCanvas.style.height = '100%';
-        burstCanvas.style.pointerEvents = 'none';
-        burstCanvas.style.zIndex = '1001';
-        document.body.appendChild(burstCanvas);
-        let bCtx = burstCanvas.getContext('2d');
-        burstCanvas.width = window.innerWidth;
-        burstCanvas.height = window.innerHeight;
-        let centerX = burstCanvas.width / 2, centerY = burstCanvas.height / 2;
-        let radius = 10;
-        let burstAnim = setInterval(() => {
-          bCtx.clearRect(0, 0, burstCanvas.width, burstCanvas.height);
-          bCtx.beginPath();
-          bCtx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-          bCtx.fillStyle = `rgba(0, 200, 255, ${1 - radius / 300})`;
-          bCtx.fill();
-          radius += 18;
-          if (radius > 500) {
-            clearInterval(burstAnim);
-            burstCanvas.remove();
-          }
-        }, 20);
+        // Smoothly fade out canvases along with the splash screen
+        if (canvas1) canvas1.classList.add('canvas-fadeout');
+        if (canvas2) canvas2.classList.add('canvas-fadeout');
+        if (splash) splash.classList.add('splash-hidden');
 
-        // remove splash element after transition
+        // Remove everything from DOM after fade-out transition finishes
         setTimeout(() => {
-          if (splash && splash.parentNode) splash.remove();
+          if (splash) splash.remove();
+          if (canvas1) canvas1.remove();
+          if (canvas2) canvas2.remove();
         }, 1000);
+
+        if (interval) {
+          clearInterval(interval);
+          interval = null;
+        }
       }
 
-      // Use MutationObserver to detect Flutter's root element (canvas or flutter-view)
-      function waitForFlutterAndRemoveSplash() {
-        const targetNode = document.body;
-        const observer = new MutationObserver((mutationsList, observer) => {
-          // Look for typical Flutter web elements: canvas with specific classes or div with id "flutter-view"
-          const flutterElement = document.querySelector('canvas[tabindex], flutter-view, div[style*="flutter"]');
-          if (flutterElement || document.querySelector('.flutter-view') || document.querySelector('#flt-glass-pane')) {
-            observer.disconnect();
-            // slightly delay to ensure Flutter has painted
-            setTimeout(dismissSplashForever, 200);
-            return;
-          }
-          // Also detect if any canvas inside body that's not our background canvas
-          const allCanvas = document.querySelectorAll('canvas');
-          for (let canvas of allCanvas) {
-            if (canvas.id !== 'bgCanvas' && canvas.id !== 'codeRainCanvas' && canvas.width > 100) {
-              observer.disconnect();
-              setTimeout(dismissSplashForever, 200);
-              return;
-            }
-          }
-        });
+      // Method 1: Listen for Flutter's custom event (most reliable)
+      window.addEventListener('flutter-first-frame', function () {
+        removeSplashCompletely();
+      });
 
-        observer.observe(targetNode, { childList: true, subtree: true, attributes: true });
-
-        // Fallback: if after 6 seconds Flutter still not detected, force remove (safety)
-        setTimeout(() => {
+      // Method 2: MutationObserver as fallback
+      const observer = new MutationObserver(() => {
+        const flutterCanvas = document.querySelector('canvas:not(#bgCanvas):not(#codeRainCanvas)');
+        if (flutterCanvas && flutterCanvas.width > 100 && flutterCanvas.height > 100) {
           observer.disconnect();
-          if (!document.getElementById('splashMaster')?.classList.contains('splash-hidden')) {
-            dismissSplashForever();
-          }
-        }, 7000);
-      }
+          removeSplashCompletely();
+          return;
+        }
+        const flutterView = document.querySelector('.flutter-view, #flutter-view, [data-flutter]');
+        if (flutterView) {
+          observer.disconnect();
+          removeSplashCompletely();
+        }
+      });
+
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      // Method 3: Fallback timeout (safety net)
+      setTimeout(() => {
+        if (!splashRemoved) {
+          removeSplashCompletely();
+        }
+      }, 8000);
+
+      // Early check in case Flutter loaded super fast
+      setTimeout(() => {
+        const existingFlutterCanvas = document.querySelector('canvas:not(#bgCanvas):not(#codeRainCanvas)');
+        if (existingFlutterCanvas && existingFlutterCanvas.width > 100) {
+          removeSplashCompletely();
+        }
+      }, 500);
 
       // ============================================================
       // 6. INITIALIZE EVERYTHING
       // ============================================================
       window.addEventListener('load', () => {
         startLoading();
-        waitForFlutterAndRemoveSplash();  // <-- KEY FIX: removes splash when Flutter appears
       });
 
-      // resize handlers
       window.addEventListener('resize', () => {
-        resizeBg();
-        initParticles();
-        resizeRain();
+        if (isAnimationActive) {
+          resizeBg();
+          initParticles();
+          resizeRain();
+        }
       });
 
-      // mouse tracking for vortex
       window.addEventListener('mousemove', (e) => {
+        if (!isAnimationActive) return;
         mouse.x = e.clientX;
         mouse.y = e.clientY;
         setTimeout(() => { mouse.x = null; mouse.y = null; }, 150);
       });
 
-      // start background systems
       resizeBg();
       initParticles();
       animateVortex();
