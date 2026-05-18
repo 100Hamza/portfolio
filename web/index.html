@@ -2,47 +2,268 @@
 <html>
 
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description"
-    content="Professional Flutter Developer specializing in premium, production-ready Android/iOS applications and scalable full-stack integration.">
+    content="Professional Flutter Developer specializing in premium, production-ready applications.">
 
   <meta property="og:title" content="Muhammad Hamza | Portfolio">
   <meta property="og:description"
-    content="Professional Flutter Developer specializing in premium, production-ready Android/iOS applications and scalable full-stack integration.">
+    content="Professional Flutter Developer specializing in premium, production-ready Android/iOS applications.">
   <meta property="og:image" content="icons/Icon-512.png">
   <meta property="og:type" content="website">
 
-  <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Muhammad Hamza | Portfolio">
+  <meta name="apple-mobile-web-app-title" content="Muhammad Hamza">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png" />
 
   <title>Muhammad Hamza | Portfolio</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    body {
+      background-color: #030a1c;
+      /* A deep, complex dark blue void */
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      /* A premium geometric font */
+      overflow: hidden;
+      /* Hide scroll during loading */
+    }
+
+    /* BACKGROUND PARTICLE VOID EFFECT */
+    body::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(circle at 30% 20%, #0d2c6e 1px, transparent 1px),
+        radial-gradient(circle at 80% 60%, #0d2c6e 1px, transparent 1px);
+      background-size: 80px 80px;
+      opacity: 0.15;
+      animation: particleShift 30s linear infinite;
+    }
+
+    .splash-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    /* THE HAMZA LOGO TEXT - Initially masked */
+    .hamza-logo {
+      font-size: 5rem;
+      font-weight: 800;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: transparent;
+      background-image: linear-gradient(90deg, #1f4cb8 0%, #0175C2 50%, #1f4cb8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      position: relative;
+      opacity: 0;
+      animation: logoReveal 1s 0.5s forwards, logoGlowPulse 3s infinite;
+    }
+
+    /* DYNAMIC ENERGY SWIRL AROUND THE LOGO */
+    .energy-swirl {
+      position: absolute;
+      top: -150px;
+      left: -150px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      border: 2px solid rgba(1, 117, 194, 0.4);
+      filter: blur(2px);
+      animation: swirl 5s 1.5s infinite linear;
+      opacity: 0;
+    }
+
+    .energy-swirl::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 20px;
+      height: 20px;
+      background-color: #0175C2;
+      border-radius: 50%;
+      box-shadow: 0 0 20px 10px #0175C2;
+    }
+
+    /* ELEGANT PULSING LOADING BAR */
+    .loading-bar-container {
+      width: 350px;
+      height: 6px;
+      background-color: rgba(31, 41, 55, 0.5);
+      border-radius: 3px;
+      margin-top: 50px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      opacity: 0;
+      animation: fadeIn 1s 2.5s forwards;
+    }
+
+    .loading-segment {
+      width: 19%;
+      height: 100%;
+      background-color: #0175C2;
+      border-radius: 3px;
+      transform: scaleX(0);
+      transform-origin: left center;
+      animation: fillSegment 4s 3s forwards, segmentGlowPulse 2s infinite;
+    }
+
+    .refined-text {
+      color: #ffffff;
+      margin-top: 25px;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeIn 1s 4s forwards, textPulseGlow 3s infinite;
+    }
+
+    /* KEYFRAMES ANIMATIONS */
+    @keyframes particleShift {
+      0% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(-80px);
+      }
+    }
+
+    @keyframes logoReveal {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes logoGlowPulse {
+
+      0%,
+      100% {
+        filter: drop-shadow(0 0 10px #0175C2);
+      }
+
+      50% {
+        filter: drop-shadow(0 0 25px #0175C2);
+      }
+    }
+
+    @keyframes swirl {
+      0% {
+        opacity: 1;
+        transform: rotate(0deg);
+      }
+
+      100% {
+        opacity: 1;
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fillSegment {
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    @keyframes segmentGlowPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 5px #0175C2;
+      }
+
+      50% {
+        box-shadow: 0 0 15px #0175C2;
+      }
+    }
+
+    @keyframes textPulseGlow {
+
+      0%,
+      100% {
+        text-shadow: 0 0 5px #ffffff;
+        opacity: 1;
+      }
+
+      50% {
+        text-shadow: 0 0 15px #ffffff;
+        opacity: 0.8;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <div id="loading-indicator" class="splash-container">
+    <div class="energy-swirl"></div>
+    <div class="hamza-logo">HAMZA</div>
+
+    <div class="loading-bar-container">
+      <div class="loading-segment"></div>
+      <div class="loading-segment" style="animation-delay: 3.8s, 2s"></div>
+      <div class="loading-segment" style="animation-delay: 4.6s, 2s"></div>
+      <div class="loading-segment" style="animation-delay: 5.4s, 2s"></div>
+      <div class="loading-segment" style="animation-delay: 6.2s, 2s"></div>
+      }
+    </div>
+
+    <div class="refined-text">PREPARING PREMIUM EXPERIENCE...</div>
+  </div>
+
   <script src="flutter_bootstrap.js" async></script>
+
+  <script>
+    // Smooth transition between native splash and Flutter content
+    window.addEventListener('load', function () {
+      var loader = document.getElementById('loading-indicator');
+      if (loader) {
+        // Allow the advanced animations to complete, then dissolve
+        setTimeout(function () {
+          loader.style.transition = 'opacity 1s ease-out, filter 1s ease-out';
+          loader.style.opacity = '0';
+          loader.style.filter = 'blur(10px)';
+          setTimeout(function () {
+            loader.remove();
+          }, 1000);
+        }, 10000); // 10 sec delay before dissolving
+      }
+    });
+  </script>
 </body>
 
 </html>
