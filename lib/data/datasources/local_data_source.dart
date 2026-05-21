@@ -27,7 +27,7 @@ class LocalDataSource {
           '🏗 Architecture: Offline-first hybrid using Drift (type-safe SQL) for instant local reads/writes, syncing in real-time with Cloud Firestore when online. Powered by Clean Architecture with Provider for full separation of business logic and UI.\n\n'
           '🔒 Security: Custom Flutter Method Channel integrates native Kotlin code to trigger Android lock screen authentication, ensuring financial data stays private at the device level.\n\n'
           '📊 Analytics: Category-wise expense breakdowns, real-time budget threshold warnings, and beautifully rendered financial insight charts built in Flutter.\n\n'
-          '✅ Production-Tested: Successfully completed Google Play\'s closed testing mandate (20+ testers, 14+ days) before public release. Zero crashes recorded via Firebase Crashlytics post-launch.',
+          '✅ Production-Tested: Successfully completed Google Play\'s closed testing mandate (14+ testers, 14+ days) before public release. Zero crashes recorded via Firebase Crashlytics post-launch.',
       link:
           'https://play.google.com/store/apps/details?id=com.luminexlabs.luma.expense',
       linkLabel: 'Play Store',

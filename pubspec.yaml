@@ -78,6 +78,7 @@ flutter:
     - assets/images/projects/emp/
     - assets/images/projects/luma_expense/
     - assets/images/projects/luma_notes/
+    - assets/images/projects/haosp/
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
