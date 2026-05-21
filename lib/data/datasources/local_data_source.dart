@@ -100,6 +100,26 @@ class LocalDataSource {
         
       ],
     ),
+      Project(
+      title: 'HAOSP',
+      role: 'Flutter, Dart',
+      description:
+          'Developed a lightweight management application for a small mechanic workshop to digitally track daily operations, including spare parts inventory, oil usage records, expenses, and employee activities. The system simplifies shop management by replacing manual registers with a structured digital workflow. Implemented role-based access for staff and management, enabling controlled tracking of work logs, cost monitoring, and basic operational reporting to improve efficiency and transparency in day-to-day workshop operations.',
+      link: '',
+      linkLabel: '',
+      techStack: ['Flutter', 'Dart', 'Firebase'],
+      images: [
+        'assets/images/projects/haosp/1.jpg',
+        'assets/images/projects/haosp/2.jpg',
+        'assets/images/projects/haosp/3.jpg',
+        'assets/images/projects/haosp/4.jpg',
+        'assets/images/projects/haosp/5.jpg',
+        'assets/images/projects/haosp/6.jpg',
+        'assets/images/projects/haosp/7.jpg',
+        'assets/images/projects/haosp/8.jpg',
+        'assets/images/projects/haosp/9.jpg',
+      ],
+    ),
     Project(
       title: 'Shouse (Live Streaming Platform)',
       role: 'Flutter, Dart',
