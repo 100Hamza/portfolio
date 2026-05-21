@@ -15,6 +15,7 @@ class LocalDataSource {
     'GitHub',
     'CI/CD Basics',
     'Firebase',
+    'Playstore deployment',
   ];
 
   static List<Project> get projects => [
@@ -91,6 +92,12 @@ class LocalDataSource {
       images: [
         'assets/images/projects/puffless/1.png',
         'assets/images/projects/puffless/2.png',
+        'assets/images/projects/puffless/3.png',
+        'assets/images/projects/puffless/4.png',
+        'assets/images/projects/puffless/5.png',
+        'assets/images/projects/puffless/6.png',
+        'assets/images/projects/puffless/7.png',
+        
       ],
     ),
     Project(
@@ -115,8 +122,12 @@ class LocalDataSource {
       linkLabel: '',
       techStack: ['Flutter', 'Dart'],
       images: [
-        'assets/images/projects/s24/1.png',
-        'assets/images/projects/s24/2.png',
+        'assets/images/projects/s24/1.jpg',
+        'assets/images/projects/s24/2.jpg',
+        'assets/images/projects/s24/3.jpg',
+        'assets/images/projects/s24/4.jpg',
+        'assets/images/projects/s24/5.jpg',
+        'assets/images/projects/s24/6.jpg',
       ],
     ),
     Project(
