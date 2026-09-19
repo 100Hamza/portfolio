@@ -33,7 +33,7 @@ class LocalDataSource {
       techStack: [
         'Flutter',
         'Drift',
-        'Analytics'
+        'Analytics',
         'Crashlytics',
         'RiverPod',
         
@@ -50,6 +50,43 @@ class LocalDataSource {
         'assets/images/projects/invotix/6.jpg',
         'assets/images/projects/invotix/7.jpg',
         'assets/images/projects/invotix/8.jpg',
+      ],
+    ),
+            Project(
+      title: 'Svoopy (CreatorSuit)',
+      role: 'Flutter, Dart, Team Lead',
+      description:
+          'Creator & Real-Time Communication Platform\n\n'
+          'Creator accounts support custom branding, including logo, colors and splash screen, followed by admin approval and assignment of a unique creator code.\n\n'
+          'Users can follow creators using their creator codes. The platform also provides real-time video/audio calling, live streaming and chat functionality.\n\n',
+  
+      link:
+          '',
+      linkLabel: '',
+      techStack: [
+        'Flutter',
+        'Dart',
+        'Firestore',
+        'Storage',
+        'Cloud Functions',
+        'Push notifications',
+'Stripe',
+        'Zego Cloud(Calling and Streaming)',
+      ],
+      images: [
+        'assets/images/projects/creatorapp/1.png',
+        'assets/images/projects/creatorapp/2.jpg',
+        'assets/images/projects/creatorapp/3.jpg',
+        'assets/images/projects/creatorapp/4.jpg',
+        'assets/images/projects/creatorapp/5.jpg',
+        'assets/images/projects/creatorapp/6.jpg',
+        'assets/images/projects/creatorapp/7.jpg',
+        'assets/images/projects/creatorapp/8.jpg',
+        'assets/images/projects/creatorapp/9.jpg',
+        'assets/images/projects/creatorapp/10.jpg',
+        'assets/images/projects/creatorapp/11.jpg',
+        'assets/images/projects/creatorapp/12.jpg',
+        'assets/images/projects/creatorapp/13.jpg',
       ],
     ),
     Project(
