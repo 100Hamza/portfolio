@@ -19,6 +19,39 @@ class LocalDataSource {
   ];
 
   static List<Project> get projects => [
+        Project(
+      title: 'Invotix - Invoice & Billing',
+      role: 'Flutter, Dart · Luminex Labs',
+      description:
+          'Invotix — Invoice Maker, Billing & Business Management App\n\n'
+          'Invotix is a simple invoice maker and billing app that helps freelancers, small businesses,\n\n'
+          'Invotix is a simple invoice maker and billing app that helps freelancers, small businesses, and entrepreneurs create professional invoices in seconds, manage multiple businesses, and track every payment in one place.\n\n'
+  
+      link:
+          'https://play.google.com/store/apps/details?id=com.luminexlabs.invotix',
+      linkLabel: 'Play Store',
+      techStack: [
+        'Flutter',
+        'Drift',
+        'Analytics'
+        'Crashlytics',
+        'RiverPod',
+        
+      'In-app Purchase',
+        
+    'Google Ads','Google Drive(Backup/Restore)', 'Feedback in google sheet',
+      ],
+      images: [
+        'assets/images/projects/invotix/1.png',
+        'assets/images/projects/invotix/2.jpg',
+        'assets/images/projects/invotix/3.jpg',
+        'assets/images/projects/invotix/4.jpg',
+        'assets/images/projects/invotix/5.jpg',
+        'assets/images/projects/invotix/6.jpg',
+        'assets/images/projects/invotix/7.jpg',
+        'assets/images/projects/invotix/8.jpg',
+      ],
+    ),
     Project(
       title: 'Luma: Expense & Budget Tracker',
       role: 'Flutter, Dart · Luminex Labs',
