@@ -25,7 +25,7 @@ class LocalDataSource {
       description:
           'Invotix — Invoice Maker, Billing & Business Management App\n\n'
           'Invotix is a simple invoice maker and billing app that helps freelancers, small businesses,\n\n'
-          'Invotix is a simple invoice maker and billing app that helps freelancers, small businesses, and entrepreneurs create professional invoices in seconds, manage multiple businesses, and track every payment in one place.\n\n'
+          'Invotix is a simple invoice maker and billing app that helps freelancers, small businesses, and entrepreneurs create professional invoices in seconds, manage multiple businesses, and track every payment in one place.\n\n',
   
       link:
           'https://play.google.com/store/apps/details?id=com.luminexlabs.invotix',
