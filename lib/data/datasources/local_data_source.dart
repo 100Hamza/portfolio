@@ -61,8 +61,8 @@ class LocalDataSource {
           'Users can follow creators using their creator codes. The platform also provides real-time video/audio calling, live streaming and chat functionality.\n\n',
   
       link:
-          '',
-      linkLabel: '',
+          'https://play.google.com/store/apps/details?id=com.svoopy.creatorapp',
+      linkLabel: 'Play Store',
       techStack: [
         'Flutter',
         'Dart',
